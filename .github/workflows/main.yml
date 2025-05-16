@@ -3,12 +3,11 @@ name: Laravel + React CI/CD
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v4
@@ -36,8 +35,11 @@ jobs:
       - name: Generate key
         run: php artisan key:generate
 
-      - name: Build Frontend
-        run: npm run build
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build React (Vite)
+        run: npm run dev
 
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
@@ -46,9 +48,11 @@ jobs:
         run: |
           mkdir -p database
           touch database/database.sqlite
+           - name: npm test
+        
 
-      - name: Execute tests
+      
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
-        run: php artisan test
+        
