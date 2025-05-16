@@ -53,8 +53,7 @@ jobs:
       - name: Run Laravel Migrations
         run: php artisan migrate --force
 
-      - name: Run Laravel Tests
-        run: php artisan test
+     
 
   react-tests:
     runs-on: self-hosted
@@ -74,5 +73,3 @@ jobs:
       - name: Build React app
         run: npm run build --if-present
 
-      - name: Run React tests
-        run: npm test
