@@ -34,7 +34,13 @@ jobs:
 
       - name: Generate Application Key
         run: php artisan key:generate
+      
+      - name: Run Migrations
+        run: php artisan migrate --force
 
+      - name: Install node dependencies
+        run: npm ci     
+        
       - name: Build Assets (Vite)
         run: npm run build
         env:
@@ -43,7 +49,5 @@ jobs:
       - name: Set Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
 
-      - name: Create SQLite Database
-        run: |
-          mkdir -p database
-          touch database/database.sqlite
+      
+          
